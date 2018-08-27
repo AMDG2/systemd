@@ -2141,6 +2141,9 @@ void unit_start_on_failure(Unit *u) {
 
         assert(u);
 
+        if (u->default_on_failure_dependencies && u->on_failure_job_mode != JOB_ISOLATE)
+                manager_start_on_failure(u->manager, u);
+
         if (hashmap_size(u->dependencies[UNIT_ON_FAILURE]) <= 0)
                 return;
 

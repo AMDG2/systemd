@@ -396,6 +396,9 @@ struct Manager {
          * multiple times on the same unit. */
         unsigned sigchldgen;
         unsigned notifygen;
+
+        /* Default On Failure dependencies for all units */
+        Hashmap *default_on_failure_dependency;
 };
 
 #define MANAGER_IS_SYSTEM(m) ((m)->unit_file_scope == UNIT_FILE_SYSTEM)
@@ -510,3 +513,5 @@ void manager_disable_confirm_spawn(void);
 const char *manager_timestamp_to_string(ManagerTimestamp m) _const_;
 ManagerTimestamp manager_timestamp_from_string(const char *s) _pure_;
 ManagerTimestamp manager_timestamp_initrd_mangle(ManagerTimestamp s);
+
+void manager_start_on_failure(Manager *m, const Unit *failed_unit);

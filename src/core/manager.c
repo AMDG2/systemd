@@ -4577,6 +4577,29 @@ ManagerTimestamp manager_timestamp_initrd_mangle(ManagerTimestamp s) {
         return s;
 }
 
+void manager_start_on_failure(Manager *m, const Unit *failed_unit) {
+        Unit *other;
+        Iterator i;
+        void *v;
+        int r;
+
+        assert(m);
+        assert(u);
+
+        if (hashmap_size(m->default_on_failure_dependencies) <= 0)
+                return;
+
+        log_unit_info(u, "Triggering DefaultOnFailure= dependencies.");
+
+        HASHMAP_FOREACH_KEY(v, other, m->default_on_failure_dependencies, i) {
+                _cleanup_(sd_bus_error_free) sd_bus_error error = SD_BUS_ERROR_NULL;
+
+                r = manager_add_job(m, JOB_START, other, failed_unit->on_failure_job_mode, &error, NULL);
+                if (r < 0)
+                        log_unit_warning_errno(failed_unit, r, "Failed to enqueue DefaultOnFailure= job, ignoring: %s", bus_error_message(&error, r));
+        }
+}
+
 static const char *const manager_state_table[_MANAGER_STATE_MAX] = {
         [MANAGER_INITIALIZING] = "initializing",
         [MANAGER_STARTING] = "starting",

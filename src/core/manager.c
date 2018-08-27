@@ -794,6 +794,10 @@ int manager_new(UnitFileScope scope, unsigned test_run_flags, Manager **_m) {
         if (r < 0)
                 return r;
 
+        r = hashmap_ensure_allocated(&m->default_on_failure_dependencies, NULL);
+        if (r < 0)
+                return r;
+
         r = manager_setup_prefix(m);
         if (r < 0)
                 return r;
@@ -4584,12 +4588,12 @@ void manager_start_on_failure(Manager *m, const Unit *failed_unit) {
         int r;
 
         assert(m);
-        assert(u);
+        assert(failed_unit);
 
         if (hashmap_size(m->default_on_failure_dependencies) <= 0)
                 return;
 
-        log_unit_info(u, "Triggering DefaultOnFailure= dependencies.");
+        log_unit_info(failed_unit, "Triggering DefaultOnFailure= dependencies.");
 
         HASHMAP_FOREACH_KEY(v, other, m->default_on_failure_dependencies, i) {
                 _cleanup_(sd_bus_error_free) sd_bus_error error = SD_BUS_ERROR_NULL;

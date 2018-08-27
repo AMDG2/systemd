@@ -84,6 +84,7 @@ Unit *unit_new(Manager *m, size_t size) {
         u->manager = m;
         u->type = _UNIT_TYPE_INVALID;
         u->default_dependencies = true;
+        u->default_on_failure_dependencies = true;
         u->unit_file_state = _UNIT_FILE_STATE_INVALID;
         u->unit_file_preset = -1;
         u->on_failure_job_mode = JOB_REPLACE;

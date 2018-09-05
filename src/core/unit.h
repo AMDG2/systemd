@@ -359,7 +359,7 @@ typedef struct Unit {
         signed int last_section_private:2;
 
         /* Use the default on failure dependencies */
-        bool default_on_failure_dependencies:1;
+        bool default_on_failure_dependencies;
 } Unit;
 
 typedef struct UnitStatusMessageFormats {

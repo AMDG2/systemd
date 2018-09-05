@@ -73,6 +73,7 @@ ConditionVirtualization=
 Conflicts=
 DefaultDependencies=
 DefaultInstance=
+DefaultOnFailure=
 DeferAcceptSec=
 Delegate=
 Description=

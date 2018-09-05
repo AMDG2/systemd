@@ -613,6 +613,7 @@ const sd_bus_vtable bus_unit_vtable[] = {
         SD_BUS_PROPERTY("RefuseManualStop", "b", bus_property_get_bool, offsetof(Unit, refuse_manual_stop), SD_BUS_VTABLE_PROPERTY_CONST),
         SD_BUS_PROPERTY("AllowIsolate", "b", bus_property_get_bool, offsetof(Unit, allow_isolate), SD_BUS_VTABLE_PROPERTY_CONST),
         SD_BUS_PROPERTY("DefaultDependencies", "b", bus_property_get_bool, offsetof(Unit, default_dependencies), SD_BUS_VTABLE_PROPERTY_CONST),
+        SD_BUS_PROPERTY("DefaultOnFailure", "b", bus_property_get_bool, offsetof(Unit, default_on_failure_dependencies), SD_BUS_VTABLE_PROPERTY_CONST),
         SD_BUS_PROPERTY("OnFailureJobMode", "s", property_get_job_mode, offsetof(Unit, on_failure_job_mode), SD_BUS_VTABLE_PROPERTY_CONST),
         SD_BUS_PROPERTY("IgnoreOnIsolate", "b", bus_property_get_bool, offsetof(Unit, ignore_on_isolate), SD_BUS_VTABLE_PROPERTY_CONST),
         SD_BUS_PROPERTY("NeedDaemonReload", "b", property_get_need_daemon_reload, 0, SD_BUS_VTABLE_PROPERTY_CONST),
@@ -1408,6 +1409,9 @@ static int bus_unit_set_transient_property(
 
         if (streq(name, "DefaultDependencies"))
                 return bus_set_transient_bool(u, name, &u->default_dependencies, message, flags, error);
+
+        if (streq(name, "DefaultOnFailure"))
+                return bus_set_transient_bool(u, name, &u->default_on_failure_dependencies, message, flags, error);
 
         if (streq(name, "OnFailureJobMode"))
                 return bus_set_transient_job_mode(u, name, &u->on_failure_job_mode, message, flags, error);

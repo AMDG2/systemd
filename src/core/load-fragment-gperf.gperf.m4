@@ -220,6 +220,7 @@ Unit.RefuseManualStart,          config_parse_bool,                  0,         
 Unit.RefuseManualStop,           config_parse_bool,                  0,                             offsetof(Unit, refuse_manual_stop)
 Unit.AllowIsolate,               config_parse_bool,                  0,                             offsetof(Unit, allow_isolate)
 Unit.DefaultDependencies,        config_parse_bool,                  0,                             offsetof(Unit, default_dependencies)
+Unit.DefaultOnFailure,           config_parse_bool,                  0,                             offsetof(Unit, default_on_failure_dependencies)
 Unit.OnFailureJobMode,           config_parse_job_mode,              0,                             offsetof(Unit, on_failure_job_mode)
 m4_dnl The following is a legacy alias name for compatibility
 Unit.OnFailureIsolate,           config_parse_job_mode_isolate,      0,                             offsetof(Unit, on_failure_job_mode)

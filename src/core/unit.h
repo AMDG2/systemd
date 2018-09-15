@@ -215,6 +215,9 @@ typedef struct Unit {
         /* Queue of units with StopWhenUnneeded set that shell be checked for clean-up. */
         LIST_FIELDS(Unit, stop_when_unneeded_queue);
 
+        /* List of default OnFailure dependencies */
+        LIST_FIELDS(Unit, default_on_failure_dependencies);
+
         /* PIDs we keep an eye on. Note that a unit might have many
          * more, but these are the ones we care enough about to
          * process SIGCHLD for */

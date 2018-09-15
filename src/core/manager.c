@@ -794,10 +794,6 @@ int manager_new(UnitFileScope scope, unsigned test_run_flags, Manager **_m) {
         if (r < 0)
                 return r;
 
-        r = hashmap_ensure_allocated(&m->default_on_failure_dependencies, NULL);
-        if (r < 0)
-                return r;
-
         r = manager_setup_prefix(m);
         if (r < 0)
                 return r;

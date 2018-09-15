@@ -398,7 +398,7 @@ struct Manager {
         unsigned notifygen;
 
         /* Default On Failure dependencies for all units */
-        Hashmap *default_on_failure_dependencies;
+        LIST_HEAD(Unit, default_on_failure_dependencies);
 };
 
 #define MANAGER_IS_SYSTEM(m) ((m)->unit_file_scope == UNIT_FILE_SYSTEM)
